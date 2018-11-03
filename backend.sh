@@ -5,7 +5,7 @@ sed -i 's/error_page 502 = @backend/error_page 502 503 = @backend_502/g' *
 sed -i '/server_name_in_redirect/a include "/etc/nginx/backends_502";' *
 cat <<EOT >> /etc/nginx/backends_502
 location @backend_502 {
-     if ($http_host ~* (.*\.cloudwaysapps.com)) {
+     if (\$http_host ~* (.*\.cloudwaysapps.com)) {
             add_header  X-Robots-Tag "noindex, nofollow" always;
      }
             include /etc/nginx/nginx_proxy_params;
@@ -19,7 +19,6 @@ location @backend_502 {
 
         }
 EOT
-
 cat <<EOT >> /etc/nginx/conf.d/ngx_backends.conf
 	upstream ngx_backends_502{
 server 127.0.0.1:8081;
