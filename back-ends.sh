@@ -24,4 +24,8 @@ cat <<EOT >> /etc/nginx/conf.d/ngx_backends.conf
 server 127.0.0.1:8081;
 }
 EOT
-/etc/init.d/nginx restart
+if [[ $(nginx -t) = *test is successful* ]]; then
+  /etc/init.d/nginx restart
+else
+    echo "failed"
+fi
